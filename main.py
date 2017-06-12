@@ -1,14 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import datetime
-import sys
-import PyQt5.uic as uic
 import logging
 import os.path
+import sys
+from PyQt5.QtWidgets import QApplication
 
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QToolTip, QPushButton
-
+from Lackey import Lackey
 
 def createDirIfNeed(directory):
     if not os.path.exists(directory):
@@ -33,35 +31,9 @@ def initLog():
     rootLogger.addHandler(consoleHandler)
 
 
-class Jacket:
-    # def __init__(self, flags=Qt.WindowActive, min_width=500, min_height=500, *args, **kwargs):
-    # super().__init__(flags, *args, **kwargs)
-    jacketForm = None
-
-    def __init__(self, jacketUIFile=None, min_width=500, min_height=500):
-        initLog()
-        logging.info("Jacket initialize starts.")
-        if jacketUIFile is None or not os.path.isfile(jacketUIFile):
-            errorMessage = "Ui form file {0} not found.".format(jacketUIFile)
-            logging.error(errorMessage)
-            raise FileNotFoundError(errorMessage)
-        super().__init__()
-        self.initUI(jacketUIFile, min_width, min_height)
-        logging.info("Jacket initialized successfully.")
-
-    def initUI(self, uiFilename, min_width, min_height):
-        logging.info("UI initialize starts.")
-
-        self.jacketForm = uic.loadUi(uifile=uiFilename)
-        logging.info("Jacket main form loaded.")
-
-        self.jacketForm.show()
-        # QToolTip.setFont(QFont('SansSerif', 10))
-
-        logging.info("UI initialized successfully.")
-
 
 if __name__ == '__main__':
+    initLog()
     app = QApplication(sys.argv)
-    jacket = Jacket('JacketUI.ui')
+    jacket = Lackey('JacketUI.ui')
     sys.exit(app.exec_())
